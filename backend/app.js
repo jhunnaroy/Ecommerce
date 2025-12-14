@@ -72,10 +72,10 @@ app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 
-// ================= ERROR MIDDLEWARE =================
+
 app.use(errorMiddleware);
 
-// ================= FRONTEND (PRODUCTION ONLY) =================
+
 if (process.env.NODE_ENV === "PRODUCTION") {
   const buildPath = path.join(__dirname, "../frontend/build");
 
