@@ -47,44 +47,48 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
+const path = require("path");
 const errorMiddleware = require("./middleware/error");
 
-// ================== CONFIG ==================
+// ================= CONFIG =================
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/config.env" });
 }
 
-// ================== MIDDLEWARES ==================
+// ================= MIDDLEWARES =================
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  fileUpload({
-    useTempFiles: true,
-  })
-);
+app.use(fileUpload());
 
-// ================== ROUTES ==================
-const productRoutes = require("./routes/productRoute");
-const userRoutes = require("./routes/userRoute");
-const orderRoutes = require("./routes/orderRoute");
-const paymentRoutes = require("./routes/paymentRoute");
+// ================= ROUTES =================
+const product = require("./routes/productRoute");
+const user = require("./routes/userRoute");
+const order = require("./routes/orderRoute");
+const payment = require("./routes/paymentRoute");
 
-// API Routes
-app.use("/api/v1", productRoutes);
-app.use("/api/v1", userRoutes);
-app.use("/api/v1", orderRoutes);
-app.use("/api/v1", paymentRoutes);
+app.use("/api/v1", product);
+app.use("/api/v1", user);
+app.use("/api/v1", order);
+app.use("/api/v1", payment);
 
-// ================== HEALTH CHECK ==================
-app.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "API is running successfully 🚀",
-  });
-});
-
-// ================== ERROR HANDLER (LAST) ==================
+// ================= ERROR MIDDLEWARE =================
 app.use(errorMiddleware);
 
-module.exports = app;
+// ================= FRONTEND (PRODUCTION ONLY) =================
+if (process.env.NODE_ENV === "PRODUCTION") {
+  const buildPath = path.join(__dirname, "../frontend/build");
+
+  app.use(express.static(buildPath));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(buildPath, "index.html"));
+  });
+} else {
+  // Dev check route
+  app.get("/", (req, res) => {
+    res.send("API running in development mode");
+  });
+}
+
+module.exports = app

@@ -27,7 +27,7 @@ cloudinary.config({
 
 // Start Server
 const server = app.listen(process.env.PORT, () => {
-  console.log(` Server running on http://localhost:${process.env.PORT}`);
+  console.log(` Server running on http://localhost:${process.env.PORT || 7000}`);
 });
 
 // Unhandled Promise Rejections
@@ -36,3 +36,6 @@ process.on("unhandledRejection", (err) => {
   console.log("Shutting down server due to unhandled promise rejection");
   server.close(() => process.exit(1));
 });
+
+
+//  https://ecommerce-frontend-9vnx.onrender.com
