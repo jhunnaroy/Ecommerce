@@ -80,11 +80,19 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/me`);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/v1/me`,
+      {
+        withCredentials: true, // ✅ VERY IMPORTANT
+      }
+    );
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: LOAD_USER_FAIL,
+      payload: error.response?.data?.message || error.message, // ✅ safe
+    });
   }
 };
 
