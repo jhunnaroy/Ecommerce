@@ -10,12 +10,18 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/config.env" });
 }
 
+// app.use(
+//   cors({
+//     origin: [
+//       process.env.FRONTEND_URL,
+      
+//     ],
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL,
-      
-    ],
+    origin: process.env.FRONTEND_URL, 
     credentials: true,
   })
 );
