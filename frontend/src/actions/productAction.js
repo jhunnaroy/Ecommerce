@@ -99,11 +99,11 @@ export const createProduct = (productData) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({
-      type: NEW_PRODUCT_FAIL,
-      payload: error.response.data.message,
-    });
-  }
+  dispatch({
+    type: ALL_PRODUCT_FAIL,
+    payload: error.response?.data?.message || error.message,
+  });
+}
 };
 
 // Update Product
