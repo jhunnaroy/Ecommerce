@@ -5,38 +5,49 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 
-const API = process.env.REACT_APP_API_URL;
+// ENV URL
+const API = process.env.REACT_APP_API_URL || "";
 
-// Add to Cart
+// ================= ADD TO CART =================
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-  const { data } = await axios.get(`${API}/api/v1/product/${id}`);
+  try {
+    const { data } = await axios.get(`${API}/api/v1/product/${id}`);
 
-  dispatch({
-    type: ADD_TO_CART,
-    payload: {
-      product: data.product._id,
-      name: data.product.name,
-      price: data.product.price,
-      image: data.product.images[0].url,
-      stock: data.product.Stock,
-      quantity,
-    },
-  });
+    dispatch({
+      type: ADD_TO_CART,
+      payload: {
+        product: data.product._id,
+        name: data.product.name,
+        price: data.product.price,
+        image: data.product.images[0]?.url,
+        stock: data.product.Stock,
+        quantity,
+      },
+    });
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  } catch (error) {
+    console.error("Add to Cart Error:", error.message);
+  }
 };
 
-// REMOVE FROM CART
+// ================= REMOVE FROM CART =================
 export const removeItemsFromCart = (id) => async (dispatch, getState) => {
   dispatch({
     type: REMOVE_CART_ITEM,
     payload: id,
   });
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+  localStorage.setItem(
+    "cartItems",
+    JSON.stringify(getState().cart.cartItems)
+  );
 };
 
-// SAVE SHIPPING INFO
+// ================= SAVE SHIPPING INFO =================
 export const saveShippingInfo = (data) => async (dispatch) => {
   dispatch({
     type: SAVE_SHIPPING_INFO,

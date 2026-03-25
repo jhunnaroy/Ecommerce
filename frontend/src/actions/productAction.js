@@ -31,6 +31,8 @@ import {
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
+const API = process.env.REACT_APP_API_URL;
+
 // ==================== GET ALL PRODUCTS ====================
 export const getProduct =
   (keyword = "", currentPage = 1, price = [0, 25000], category, ratings = 0) =>
@@ -38,7 +40,7 @@ export const getProduct =
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      let link = `${API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
       if (category) {
         link += `&category=${category}`;
@@ -65,13 +67,11 @@ export const getAdminProduct = () => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const config = {
+    const { data } = await axios.get(`${API}/api/v1/admin/products`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    };
-
-    const { data } = await axios.get(`/api/v1/admin/products`, config);
+    });
 
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
@@ -92,17 +92,15 @@ export const createProduct = (productData) => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     const { data } = await axios.post(
-      `/api/v1/admin/product/new`,
+      `${API}/api/v1/admin/product/new`,
       productData,
-      config
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     dispatch({
@@ -124,17 +122,15 @@ export const updateProduct = (id, productData) => async (dispatch, getState) => 
 
     const { token } = getState().user;
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     const { data } = await axios.put(
-      `/api/v1/admin/product/${id}`,
+      `${API}/api/v1/admin/product/${id}`,
       productData,
-      config
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     dispatch({
@@ -156,15 +152,13 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     const { data } = await axios.delete(
-      `/api/v1/admin/product/${id}`,
-      config
+      `${API}/api/v1/admin/product/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     dispatch({
@@ -184,7 +178,7 @@ export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await axios.get(`${API}/api/v1/product/${id}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -205,14 +199,16 @@ export const newReview = (reviewData) => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const { data } = await axios.put(`/api/v1/review`, reviewData, config);
+    const { data } = await axios.put(
+      `${API}/api/v1/review`,
+      reviewData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     dispatch({
       type: NEW_REVIEW_SUCCESS,
@@ -231,7 +227,7 @@ export const getAllReviews = (id) => async (dispatch) => {
   try {
     dispatch({ type: ALL_REVIEW_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/reviews?id=${id}`);
+    const { data } = await axios.get(`${API}/api/v1/reviews?id=${id}`);
 
     dispatch({
       type: ALL_REVIEW_SUCCESS,
@@ -253,15 +249,13 @@ export const deleteReviews =
 
       const { token } = getState().user;
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
       const { data } = await axios.delete(
-        `/api/v1/reviews?id=${reviewId}&productId=${productId}`,
-        config
+        `${API}/api/v1/reviews?id=${reviewId}&productId=${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       dispatch({
@@ -277,6 +271,6 @@ export const deleteReviews =
   };
 
 // ==================== CLEAR ERRORS ====================
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };

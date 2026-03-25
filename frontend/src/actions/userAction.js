@@ -39,13 +39,15 @@ import {
 
 import axios from "axios";
 
+const API = process.env.REACT_APP_API_URL;
+
 // ================= LOGIN =================
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
 
     const { data } = await axios.post(
-      `/api/v1/login`,
+      `${API}/api/v1/login`,
       { email, password },
       { headers: { "Content-Type": "application/json" } }
     );
@@ -71,7 +73,7 @@ export const register = (userData) => async (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
 
     const { data } = await axios.post(
-      `/api/v1/register`,
+      `${API}/api/v1/register`,
       userData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -100,13 +102,11 @@ export const loadUser = () => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const config = {
+    const { data } = await axios.get(`${API}/api/v1/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    };
-
-    const { data } = await axios.get(`/api/v1/me`, config);
+    });
 
     dispatch({
       type: LOAD_USER_SUCCESS,
@@ -123,7 +123,7 @@ export const loadUser = () => async (dispatch, getState) => {
 // ================= LOGOUT =================
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`/api/v1/logout`);
+    await axios.get(`${API}/api/v1/logout`);
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
     dispatch({
@@ -141,7 +141,7 @@ export const updateProfile = (userData) => async (dispatch, getState) => {
     const { token } = getState().user;
 
     const { data } = await axios.put(
-      `/api/v1/me/update`,
+      `${API}/api/v1/me/update`,
       userData,
       {
         headers: {
@@ -171,7 +171,7 @@ export const updatePassword = (passwords) => async (dispatch, getState) => {
     const { token } = getState().user;
 
     const { data } = await axios.put(
-      `/api/v1/password/update`,
+      `${API}/api/v1/password/update`,
       passwords,
       {
         headers: {
@@ -199,7 +199,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
     const { data } = await axios.post(
-      `/api/v1/password/forgot`,
+      `${API}/api/v1/password/forgot`,
       { email },
       {
         headers: { "Content-Type": "application/json" },
@@ -224,7 +224,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     dispatch({ type: RESET_PASSWORD_REQUEST });
 
     const { data } = await axios.put(
-      `/api/v1/password/reset/${token}`,
+      `${API}/api/v1/password/reset/${token}`,
       passwords,
       {
         headers: { "Content-Type": "application/json" },
@@ -243,14 +243,14 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   }
 };
 
-// ================= ADMIN ALL USERS =================
+// ================= ADMIN USERS =================
 export const getAllUsers = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
 
     const { token } = getState().user;
 
-    const { data } = await axios.get(`/api/v1/admin/users`, {
+    const { data } = await axios.get(`${API}/api/v1/admin/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -275,7 +275,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const { data } = await axios.get(`/api/v1/admin/user/${id}`, {
+    const { data } = await axios.get(`${API}/api/v1/admin/user/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -293,36 +293,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-// ================= UPDATE USER =================
-export const updateUser = (id, userData) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: UPDATE_USER_REQUEST });
-
-    const { token } = getState().user;
-
-    const { data } = await axios.put(
-      `/api/v1/admin/user/${id}`,
-      userData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    dispatch({
-      type: UPDATE_USER_SUCCESS,
-      payload: data.success,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_USER_FAIL,
-      payload: error.response?.data?.message || error.message,
-    });
-  }
-};
-
 // ================= DELETE USER =================
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
@@ -330,7 +300,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     const { token } = getState().user;
 
-    const { data } = await axios.delete(`/api/v1/admin/user/${id}`, {
+    const { data } = await axios.delete(`${API}/api/v1/admin/user/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
