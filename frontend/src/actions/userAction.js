@@ -293,6 +293,36 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
+// ================= UPDATE USER =================
+export const updateUser = (id, userData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+
+    const { token } = getState().user;
+
+    const { data } = await axios.put(
+      `${API}/api/v1/admin/user/${id}`,
+      userData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};
+
 // ================= DELETE USER =================
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
