@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 
 const connectDatabase = async () => {
   try {
-    const data = await mongoose.connect(process.env.DB_URI);
+    mongoose.set("strictQuery", true); // 🔥 removes warning
+
+    const data = await mongoose.connect(process.env.DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
     console.log(
       `MongoDB connected with server: ${data.connection.host}`
