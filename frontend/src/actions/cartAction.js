@@ -5,13 +5,13 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 
-// ENV URL
-const API = process.env.REACT_APP_API_URL || "";
+// 🔥 Direct Backend URL (NO .env)
+
 
 // ================= ADD TO CART =================
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`${API}/api/v1/product/${id}`);
+    const { data } = await axios.get(`/api/v1/product/${id}`);
 
     dispatch({
       type: ADD_TO_CART,
@@ -30,29 +30,37 @@ export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
       JSON.stringify(getState().cart.cartItems)
     );
   } catch (error) {
-    console.error("Add to Cart Error:", error.message);
+    console.error("Add to Cart Error:", error.response?.data?.message || error.message);
   }
 };
 
 // ================= REMOVE FROM CART =================
 export const removeItemsFromCart = (id) => async (dispatch, getState) => {
-  dispatch({
-    type: REMOVE_CART_ITEM,
-    payload: id,
-  });
+  try {
+    dispatch({
+      type: REMOVE_CART_ITEM,
+      payload: id,
+    });
 
-  localStorage.setItem(
-    "cartItems",
-    JSON.stringify(getState().cart.cartItems)
-  );
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  } catch (error) {
+    console.error("Remove Cart Error:", error.message);
+  }
 };
 
 // ================= SAVE SHIPPING INFO =================
 export const saveShippingInfo = (data) => async (dispatch) => {
-  dispatch({
-    type: SAVE_SHIPPING_INFO,
-    payload: data,
-  });
+  try {
+    dispatch({
+      type: SAVE_SHIPPING_INFO,
+      payload: data,
+    });
 
-  localStorage.setItem("shippingInfo", JSON.stringify(data));
+    localStorage.setItem("shippingInfo", JSON.stringify(data));
+  } catch (error) {
+    console.error("Shipping Info Error:", error.message);
+  }
 };
