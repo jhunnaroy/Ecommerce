@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 // );
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, 
+    origin: "https://ecommerce-frontend-nvpw.onrender.com",
     credentials: true,
   })
 );
