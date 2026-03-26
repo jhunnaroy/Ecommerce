@@ -5,7 +5,7 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 
-// 🔥 Direct Backend URL (NO .env)
+
 
 
 // ================= ADD TO CART =================

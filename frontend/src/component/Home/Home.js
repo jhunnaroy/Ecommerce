@@ -1,12 +1,4 @@
-// import React, { Fragment, useEffect } from "react";
-// import { CgMouse } from "react-icons/all";
-// import "./Home.css";
-// import ProductCard from "./ProductCard.js";
-// import MetaData from "../layout/MetaData";
-// import { clearErrors, getProduct } from "../../actions/productAction";
-// import { useSelector, useDispatch } from "react-redux";
-// import Loader from "../layout/Loader/Loader";
-// import { useAlert } from "react-alert";
+
 import React, { Fragment, useEffect } from "react";
 import { CgMouse } from "react-icons/cg";
 import "./Home.css";
