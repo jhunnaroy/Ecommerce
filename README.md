@@ -1,82 +1,77 @@
-🛒 MERN E-Commerce Application
+# 🛒 MERN E-Commerce Application
 
-A full-featured E-Commerce web application built using the MERN Stack (MongoDB, Express, React, Node.js) with authentication, payment integration, admin dashboard, and product management.
+A full-featured E-Commerce web application built using the **MERN Stack (MongoDB, Express, React, Node.js)** with authentication, payment integration, admin dashboard, and product management.
 
+---
 
+## 🌐 Live Demo
 
-🚀 Tech Stack
+👉 **Frontend URL:**
+https://ecommerce-1-frontend-dneg.onrender.com
 
-Frontend: React.js, Redux, Axios
+---
 
-Backend: Node.js, Express.js
+## 🚀 Tech Stack
 
-Database: MongoDB
+### Frontend:
 
-Authentication: JWT & Cookies
+* React.js
+* Redux
+* Axios
 
-Payment Gateway: Stripe
+### Backend:
 
-Image Upload: Cloudinary
+* Node.js
+* Express.js
 
+### Database:
 
+* MongoDB
 
+### Authentication:
 
-🚀 Tech Stack
+* JWT & Cookies
 
-Frontend: React.js, Redux, Axios
+### Payment Gateway:
 
-Backend: Node.js, Express.js
+* Stripe
 
-Database: MongoDB
+### Image Upload:
 
-Authentication: JWT & Cookies
+* Cloudinary
 
-Payment Gateway: Stripe
+---
 
-Image Upload: Cloudinary
-
-
-
-
-
-⚙️ Prerequisites
+## ⚙️ Prerequisites
 
 Make sure you have installed:
 
-Node.js
-
-MongoDB
-
-Git
+* Node.js
+* MongoDB
+* Git
 
 Basic knowledge of:
 
-Node.js
+* React.js
+* Node.js
+* Express.js
+* MongoDB
 
-React.js
+---
 
-Express.js
-
-MongoDB
-
-
-
-
-
-💳 Stripe Test Card
+## 💳 Stripe Test Card
 
 Use this for testing payments:
-Card Number: 4242 4242 4242 4242
-Expiry: Any future date
-CVV: Any 3 digits
 
+* Card Number: 4242 4242 4242 4242
+* Expiry: Any future date
+* CVV: Any 3 digits
 
+---
 
+## 📁 Project Structure
 
-
-📁 Project Structure
-
-
+```
 MERN-Ecommerce/
 │
 ├── backend/
@@ -92,16 +87,30 @@ MERN-Ecommerce/
 │   └── public/
 │
 └── README.md
+```
 
+---
 
+## 🌍 Deployment
 
+* **Frontend:** Render
+* **Backend:** Render / Railway
+* **Database:** MongoDB Atlas
 
-🌍 Deployment
+---
 
-You can deploy:
+## ✨ Features
 
-Backend → Render / Railway
+* User Authentication (Login/Register)
+* Product Listing & Search
+* Add to Cart & Checkout
+* Stripe Payment Integration
+* Admin Dashboard
+* Order Management
+* Image Upload (Cloudinary)
 
-Frontend → Vercel / Netlify
+---
 
-Database → MongoDB Atlas
+## 📌 Author
+
+**Jhunna Kumar**
