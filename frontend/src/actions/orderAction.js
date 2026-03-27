@@ -204,10 +204,10 @@ import {
 
 import axios from "axios";
 
-// ✅ ENV URL
+// ENV URL
 const API = process.env.REACT_APP_API_URL;
 
-// ================= CREATE ORDER =================
+// CREATE ORDER 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({ type: CREATE_ORDER_REQUEST });
@@ -237,7 +237,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-// ================= MY ORDERS =================
+//  MY ORDERS
 export const myOrders = () => async (dispatch, getState) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
@@ -265,7 +265,7 @@ export const myOrders = () => async (dispatch, getState) => {
   }
 };
 
-// ================= ADMIN ALL ORDERS =================
+//  ADMIN ALL ORDERS 
 export const getAllOrders = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
@@ -293,7 +293,7 @@ export const getAllOrders = () => async (dispatch, getState) => {
   }
 };
 
-// ================= UPDATE ORDER =================
+//  UPDATE ORDER 
 export const updateOrder = (id, order) => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_ORDER_REQUEST });
@@ -323,7 +323,7 @@ export const updateOrder = (id, order) => async (dispatch, getState) => {
   }
 };
 
-// ================= DELETE ORDER =================
+//  DELETE ORDER
 export const deleteOrder = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
@@ -379,7 +379,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-// ================= CLEAR ERRORS =================
+// CLEAR ERRORS
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };

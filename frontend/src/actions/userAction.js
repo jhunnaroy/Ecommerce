@@ -491,7 +491,7 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
-// ================= UPDATE PROFILE =================
+//UPDATE PROFILE 
 export const updateProfile = (userData) => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
@@ -521,7 +521,7 @@ export const updateProfile = (userData) => async (dispatch, getState) => {
   }
 };
 
-// ================= UPDATE PASSWORD =================
+//  UPDATE PASSWORD 
 export const updatePassword = (passwords) => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
@@ -551,7 +551,7 @@ export const updatePassword = (passwords) => async (dispatch, getState) => {
   }
 };
 
-// ================= FORGOT PASSWORD =================
+// FORGOT PASSWORD
 export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
@@ -576,7 +576,7 @@ export const forgotPassword = (email) => async (dispatch) => {
   }
 };
 
-// ================= RESET PASSWORD =================
+//  RESET PASSWORD 
 export const resetPassword = (token, passwords) => async (dispatch) => {
   try {
     dispatch({ type: RESET_PASSWORD_REQUEST });
@@ -601,7 +601,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   }
 };
 
-// ================= ADMIN USERS =================
+// ADMIN USERS 
 export const getAllUsers = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
@@ -629,7 +629,7 @@ export const getAllUsers = () => async (dispatch, getState) => {
   }
 };
 
-// ================= DELETE USER =================
+//  DELETE USER 
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
@@ -657,12 +657,12 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
-// ================= UPDATE USER =================
+//  UPDATE USER 
 export const updateUser = (id, userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
-    const token = localStorage.getItem("token"); // ✅ FIX
+    const token = localStorage.getItem("token"); // 
 
     const { data } = await axios.put(
       `${API}/api/v1/admin/user/${id}`,
@@ -687,7 +687,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
   }
 };
 
-// ================= USER DETAILS =================
+// USER DETAILS 
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
@@ -714,7 +714,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     });
   }
 };
-// ================= CLEAR ERRORS =================
+//  CLEAR ERRORS 
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };

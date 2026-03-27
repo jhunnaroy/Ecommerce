@@ -8,7 +8,7 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 
-// ================= ADD TO CART =================
+// ADD TO Card
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
   try {
     const { data } = await axios.get(`${API}/api/v1/product/${id}`);
@@ -36,7 +36,7 @@ export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
     );
   }
 };
-// ================= REMOVE FROM CART =================
+//  REMOVE FROM CART
 export const removeItemsFromCart = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -53,7 +53,7 @@ export const removeItemsFromCart = (id) => async (dispatch, getState) => {
   }
 };
 
-// ================= SAVE SHIPPING INFO =================
+// SAVE SHIPPING INFO
 export const saveShippingInfo = (data) => async (dispatch) => {
   try {
     dispatch({

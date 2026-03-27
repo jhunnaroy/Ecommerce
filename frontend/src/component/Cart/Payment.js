@@ -19,7 +19,7 @@ import EventIcon from "@material-ui/icons/Event";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { createOrder, clearErrors } from "../../actions/orderAction";
 
-// ✅ IMPORTANT FIX
+
 import { useHistory } from "react-router-dom";
 
 const Payment = () => {
@@ -102,7 +102,7 @@ const Payment = () => {
 
           dispatch(createOrder(order));
 
-          history.push("/success"); // ✅ NOW WORKING
+          history.push("/success"); 
         } else {
           alert.error("Payment failed");
         }

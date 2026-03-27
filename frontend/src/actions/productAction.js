@@ -314,7 +314,7 @@ import {
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
-// ✅ ENV URL
+//  ENV URL
 const API = process.env.REACT_APP_API_URL;
 
 // ==================== GET ALL PRODUCTS ====================
@@ -344,12 +344,12 @@ export const getProduct =
     }
   };
 
-// ==================== ADMIN PRODUCTS ====================
+// ADMIN PRODUCTS 
 export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
-    const token = localStorage.getItem("token"); // ✅ FIX
+    const token = localStorage.getItem("token"); 
 
     const { data } = await axios.get(
       `${API}/api/v1/admin/products`,
@@ -372,12 +372,12 @@ export const getAdminProduct = () => async (dispatch) => {
   }
 };
 
-// ==================== CREATE PRODUCT ====================
+//  CREATE PRODUCT 
 export const createProduct = (productData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
-    const token = localStorage.getItem("token"); // ✅ FIX
+    const token = localStorage.getItem("token"); 
 
     const { data } = await axios.post(
       `${API}/api/v1/admin/product/new`,
@@ -385,7 +385,7 @@ export const createProduct = (productData) => async (dispatch) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ IMPORTANT
+          Authorization: `Bearer ${token}`, 
         },
       }
     );
@@ -402,7 +402,7 @@ export const createProduct = (productData) => async (dispatch) => {
   }
 };
 
-// ==================== UPDATE PRODUCT ====================
+//UPDATE PRODUCT 
 export const updateProduct = (id, productData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PRODUCT_REQUEST });
@@ -432,7 +432,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
   }
 };
 
-// ==================== DELETE PRODUCT ====================
+//DELETE PRODUCT
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
@@ -460,7 +460,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   }
 };
 
-// ==================== PRODUCT DETAILS ====================
+// PRODUCT DETAILS 
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
@@ -481,7 +481,7 @@ export const getProductDetails = (id) => async (dispatch) => {
   }
 };
 
-// ==================== NEW REVIEW ====================
+//  NEW REVIEW 
 export const newReview = (reviewData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_REVIEW_REQUEST });
@@ -511,7 +511,7 @@ export const newReview = (reviewData) => async (dispatch) => {
   }
 };
 
-// ==================== ALL REVIEWS ====================
+// ALL REVIEWS 
 export const getAllReviews = (id) => async (dispatch) => {
   try {
     dispatch({ type: ALL_REVIEW_REQUEST });
@@ -532,7 +532,7 @@ export const getAllReviews = (id) => async (dispatch) => {
   }
 };
 
-// ==================== DELETE REVIEW ====================
+//  DELETE REVIEW 
 export const deleteReviews =
   (reviewId, productId) => async (dispatch) => {
     try {
@@ -561,7 +561,7 @@ export const deleteReviews =
     }
   };
 
-// ==================== CLEAR ERRORS ====================
+//  CLEAR ERRORS 
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
