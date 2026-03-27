@@ -6,12 +6,12 @@ import {
 import axios from "axios";
 
 
-
+const API = process.env.REACT_APP_API_URL;
 
 // ================= ADD TO CART =================
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await axios.get(`${API}/api/v1/product/${id}`);
 
     dispatch({
       type: ADD_TO_CART,
@@ -30,10 +30,12 @@ export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
       JSON.stringify(getState().cart.cartItems)
     );
   } catch (error) {
-    console.error("Add to Cart Error:", error.response?.data?.message || error.message);
+    console.error(
+      "Add to Cart Error:",
+      error.response?.data?.message || error.message
+    );
   }
 };
-
 // ================= REMOVE FROM CART =================
 export const removeItemsFromCart = (id) => async (dispatch, getState) => {
   try {

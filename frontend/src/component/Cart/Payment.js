@@ -19,7 +19,12 @@ import EventIcon from "@material-ui/icons/Event";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { createOrder, clearErrors } from "../../actions/orderAction";
 
-const Payment = ({ history }) => {
+// ✅ IMPORTANT FIX
+import { useHistory } from "react-router-dom";
+
+const Payment = () => {
+  const history = useHistory(); // 🔥 FIXED
+
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
   const dispatch = useDispatch();
@@ -31,6 +36,8 @@ const Payment = ({ history }) => {
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const { error } = useSelector((state) => state.newOrder);
+
+  const API = process.env.REACT_APP_API_URL;
 
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
@@ -51,15 +58,15 @@ const Payment = ({ history }) => {
     payBtn.current.disabled = true;
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
       const { data } = await axios.post(
-        "/api/v1/payment/process",
+        `${API}/api/v1/payment/process`,
         paymentData,
-        config
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
       );
 
       const client_secret = data.client_secret;
@@ -70,14 +77,14 @@ const Payment = ({ history }) => {
         payment_method: {
           card: elements.getElement(CardNumberElement),
           billing_details: {
-            name: user.name,
-            email: user.email,
+            name: user?.name,
+            email: user?.email,
             address: {
-              line1: shippingInfo.address,
-              city: shippingInfo.city,
-              state: shippingInfo.state,
-              postal_code: shippingInfo.pinCode,
-              country: shippingInfo.country,
+              line1: shippingInfo?.address,
+              city: shippingInfo?.city,
+              state: shippingInfo?.state,
+              postal_code: shippingInfo?.pinCode,
+              country: shippingInfo?.country,
             },
           },
         },
@@ -85,7 +92,6 @@ const Payment = ({ history }) => {
 
       if (result.error) {
         payBtn.current.disabled = false;
-
         alert.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
@@ -96,14 +102,19 @@ const Payment = ({ history }) => {
 
           dispatch(createOrder(order));
 
-          history.push("/success");
+          history.push("/success"); // ✅ NOW WORKING
         } else {
-          alert.error("There's some issue while processing payment ");
+          alert.error("Payment failed");
         }
       }
     } catch (error) {
       payBtn.current.disabled = false;
-      alert.error(error.response.data.message);
+
+      console.log("Payment Error:", error);
+
+      alert.error(
+        error.response?.data?.message || "Something went wrong in payment"
+      );
     }
   };
 
@@ -118,17 +129,21 @@ const Payment = ({ history }) => {
     <Fragment>
       <MetaData title="Payment" />
       <CheckoutSteps activeStep={2} />
+
       <div className="paymentContainer">
-        <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>
+        <form className="paymentForm" onSubmit={submitHandler}>
           <Typography>Card Info</Typography>
+
           <div>
             <CreditCardIcon />
             <CardNumberElement className="paymentInput" />
           </div>
+
           <div>
             <EventIcon />
             <CardExpiryElement className="paymentInput" />
           </div>
+
           <div>
             <VpnKeyIcon />
             <CardCvcElement className="paymentInput" />
@@ -136,7 +151,7 @@ const Payment = ({ history }) => {
 
           <input
             type="submit"
-            value={`Pay - ₹${orderInfo && orderInfo.totalPrice}`}
+            value={`Pay - ₹${orderInfo?.totalPrice}`}
             ref={payBtn}
             className="paymentFormBtn"
           />
