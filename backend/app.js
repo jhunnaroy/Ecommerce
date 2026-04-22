@@ -13,17 +13,14 @@ require("dotenv").config({ path: "./backend/config/config.env" });
 // ✅ Debug (check env loading)
 console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 
-// ✅ CORS FIX (IMPORTANT)
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL || "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "http://localhost:3000"
-];
+ 
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
