@@ -14,13 +14,21 @@ require("dotenv").config({ path: "./backend/config/config.env" });
 console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 
  
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URLS || "http://localhost:3001",
+//     credentials: true,
+//   })
+// );
+
+
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URLS || "http://localhost:3001",
+    origin: process.env.FRONTEND_URLS.split(","),
     credentials: true,
   })
 );
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
