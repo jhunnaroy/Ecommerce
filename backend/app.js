@@ -10,22 +10,17 @@ const errorMiddleware = require("./middleware/error");
 // ✅ Load ENV properly
 require("dotenv").config({ path: "./backend/config/config.env" });
 
-// ✅ Debug (check env loading)
-console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+const express = require("express");
+const app = express();
 
- 
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URLS || "http://localhost:3001",
-//     credentials: true,
-//   })
-// );
-
-
+const cors = require("cors");
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URLS.split(","),
+    origin: [
+      "http://localhost:3000",
+      "https://frontend-vo3n.onrender.com",
+    ],
     credentials: true,
   })
 );
