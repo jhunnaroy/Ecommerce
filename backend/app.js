@@ -10,10 +10,7 @@ const errorMiddleware = require("./middleware/error");
 // ✅ Load ENV properly
 require("dotenv").config({ path: "./backend/config/config.env" });
 
-const express = require("express");
-const app = express();
 
-const cors = require("cors");
 
 app.use(
   cors({
